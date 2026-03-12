@@ -31,8 +31,6 @@ h1{
 margin-bottom:20px;
 }
 
-/* busca */
-
 .search{
 margin-bottom:20px;
 display:flex;
@@ -46,7 +44,7 @@ border-radius:6px;
 border:1px solid #ccc;
 }
 
-/* categorias */
+
 
 .categories{
 display:flex;
@@ -67,7 +65,7 @@ cursor:pointer;
 background:#eff6ff;
 }
 
-/* grid produtos */
+
 
 .products{
 display:grid;

@@ -16,7 +16,7 @@ flex-direction:column;
 min-height:100vh;
 }
 
-/* caixa login */
+
 
 .login-box{
 background:white;
@@ -35,7 +35,7 @@ color:#1e40af;
 margin-bottom:20px;
 }
 
-/* campos */
+
 
 form label{
 display:block;
@@ -51,7 +51,7 @@ border:1px solid #ccc;
 border-radius:6px;
 }
 
-/* opções */
+
 
 .options{
 display:flex;
@@ -61,7 +61,7 @@ font-size:13px;
 margin-bottom:15px;
 }
 
-/* botão */
+
 
 button{
 width:100%;
