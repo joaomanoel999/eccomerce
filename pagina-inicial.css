@@ -101,9 +101,3 @@
     }
 
     
-    @media (max-width: 600px) {
-      header { flex-direction: column; gap: 12px; }
-      .hero { padding: 28px 20px; }
-      .hero h1 { font-size: 24px; }
-    }
-  
