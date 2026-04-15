@@ -1,0 +1,37 @@
+{% extends 'voltstore/base.html' %}
+{% block title %}Pedido #{{ pedido.id }} — VoltStore{% endblock %}
+{% block content %}
+<div class="container" style="max-width:640px">
+  <a href="{% url 'meus_pedidos' %}" class="back-link">← Meus Pedidos</a>
+  <h1 class="section-title">Pedido #{{ pedido.id }}</h1>
+
+  <div class="card-section" style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+      <span style="color:#64748b;font-size:14px">Data</span>
+      <span>{{ pedido.criado_em|date:"d/m/Y H:i" }}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+      <span style="color:#64748b;font-size:14px">Status</span>
+      <span class="status-badge status-{{ pedido.status }}">{{ pedido.get_status_display }}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between">
+      <span style="color:#64748b;font-size:14px">Endereço</span>
+      <span>{{ pedido.endereco|default:"Não informado" }}</span>
+    </div>
+  </div>
+
+  <div class="card-section">
+    <h2 style="margin-bottom:16px">Itens</h2>
+    {% for item in pedido.itens.all %}
+      <div class="summary-row" style="padding:10px 0;border-bottom:1px solid #f1f5f9">
+        <span>{{ item.produto.nome }} <span style="color:#94a3b8">x{{ item.quantidade }}</span></span>
+        <span style="font-weight:600">R$ {{ item.subtotal }}</span>
+      </div>
+    {% endfor %}
+    <div class="summary-row" style="padding-top:16px;font-weight:700;font-size:18px">
+      <span>Total</span>
+      <span>R$ {{ pedido.total }}</span>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'voltstore/base.html' %}
+{% block title %}Checkout — VoltStore{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 class="section-title">Finalizar Compra</h1>
+
+  <div class="checkout-layout">
+    <div>
+      <div class="card-section">
+        <h2>📦 Endereço de Entrega</h2>
+        <form method="post" action="{% url 'confirmar_pedido' %}" id="checkout-form" novalidate>
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="form-group">
+              <label>{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+                <span class="field-error">{{ field.errors.0 }}</span>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </form>
+      </div>
+    </div>
+
+    <div class="cart-summary">
+      <p class="summary-title">🧾 Resumo do Pedido</p>
+      {% for item in itens %}
+        <div class="summary-row">
+          <span>{{ item.produto.nome }} x{{ item.quantidade }}</span>
+          <span>R$ {{ item.subtotal }}</span>
+        </div>
+      {% endfor %}
+      <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
+      <div class="summary-row" style="font-weight:700;font-size:18px">
+        <span>Total</span><span>R$ {{ total }}</span>
+      </div>
+      <button type="submit" form="checkout-form" class="btn" style="width:100%;margin-top:16px">
+        Confirmar Pedido →
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %}

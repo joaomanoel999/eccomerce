@@ -1,0 +1,26 @@
+{% extends 'voltstore/base.html' %}
+{% block title %}Criar Conta — VoltStore{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="login-box">
+    <div class="login-logo">⚡ VoltStore</div>
+    <p class="login-subtitle">Crie sua conta gratuitamente</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label>{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <span class="field-error">{{ field.errors.0 }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn" style="width:100%;margin-top:8px">Criar conta</button>
+    </form>
+
+    <p class="register-link">Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+  </div>
+</div>
+{% endblock %}

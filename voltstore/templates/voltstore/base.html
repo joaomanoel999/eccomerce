@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}VoltStore{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="{% url 'home' %}" class="logo">⚡ VoltStore</a>
+      <nav>
+        <a href="{% url 'home' %}">Início</a>
+        <a href="{% url 'produtos' %}">Produtos</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'minha_conta' %}">{{ user.first_name|default:user.username }}</a>
+          <a href="{% url 'logout' %}">Sair</a>
+        {% else %}
+          <a href="{% url 'login' %}">Entrar</a>
+        {% endif %}
+        <a href="{% url 'carrinho' %}" class="cart-link">
+          🛒 <span class="cart-badge">{{ carrinho_total }}</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  {% if messages %}
+    <div class="messages">
+      {% for msg in messages %}
+        <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>© 2026 VoltStore — Todos os direitos reservados</p>
+    <div>
+      <a href="#">Sobre</a>
+      <a href="#">Suporte</a>
+      <a href="{% url 'login' %}">Login</a>
+    </div>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends 'voltstore/base.html' %}
+{% block title %}Produtos — VoltStore{% endblock %}
+
+{% block content %}
+<section class="container">
+
+  <div class="page-header">
+    <h1 class="section-title">Produtos</h1>
+    <form method="get" class="search-form">
+      {% if categoria_selecionada %}
+        <input type="hidden" name="categoria" value="{{ categoria_selecionada }}">
+      {% endif %}
+      <input type="text" name="busca" value="{{ busca }}" placeholder="Buscar produto...">
+      <button type="submit">Buscar</button>
+    </form>
+  </div>
+
+  <div class="categories" style="margin-bottom:24px">
+    <a href="{% url 'produtos' %}" class="category-tag {% if not categoria_selecionada %}active{% endif %}">Todos</a>
+    {% for cat in categorias %}
+      <a href="{% url 'produtos' %}?categoria={{ cat.id }}"
+         class="category-tag {% if categoria_selecionada == cat.id|stringformat:'s' %}active{% endif %}">
+        {{ cat.icone }} {{ cat.nome }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="grid">
+    {% for produto in produtos %}
+    <div class="card">
+      {% if produto.imagem %}
+        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+      {% else %}
+        <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400" alt="{{ produto.nome }}">
+      {% endif %}
+      <div class="card-body">
+        <p class="brand">{{ produto.marca }}</p>
+        <p class="name">{{ produto.nome }}</p>
+        {% if produto.preco_antigo %}
+          <p class="old-price">R$ {{ produto.preco_antigo }}</p>
+        {% endif %}
+        <p class="price">R$ {{ produto.preco }}</p>
+        <div class="card-actions">
+          <a href="{% url 'detalhe_produto' produto.pk %}" class="btn-detail">Detalhes</a>
+          <a href="{% url 'adicionar_carrinho' produto.pk %}" class="btn-add">🛒</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <p style="color:#64748b; grid-column:1/-1">
+        Nenhum produto encontrado{% if busca %} para "{{ busca }}"{% endif %}.
+      </p>
+    {% endfor %}
+  </div>
+
+</section>
+{% endblock %}

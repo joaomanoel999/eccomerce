@@ -1,0 +1,32 @@
+{% extends 'voltstore/base.html' %}
+{% block title %}Meus Pedidos — VoltStore{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 class="section-title">Meus Pedidos</h1>
+
+  {% if pedidos %}
+    {% for pedido in pedidos %}
+    <div class="card-section" style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div>
+          <p style="font-weight:700">Pedido #{{ pedido.id }}</p>
+          <p style="color:#64748b;font-size:13px">{{ pedido.criado_em|date:"d/m/Y" }} — {{ pedido.itens.count }} item(s)</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="status-badge status-{{ pedido.status }}">{{ pedido.get_status_display }}</span>
+          <strong>R$ {{ pedido.total }}</strong>
+          <a href="{% url 'detalhe_pedido' pedido.pk %}" class="btn-detail">Ver detalhes</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="cart-empty">
+      <p style="font-size:48px;margin-bottom:16px">📦</p>
+      <h3>Nenhum pedido ainda</h3>
+      <p>Suas compras aparecerão aqui</p>
+      <a href="{% url 'produtos' %}" class="btn" style="margin-top:16px;display:inline-block">Ver produtos</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

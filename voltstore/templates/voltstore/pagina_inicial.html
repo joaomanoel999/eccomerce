@@ -1,0 +1,54 @@
+{% extends 'voltstore/base.html' %}
+{% block title %}VoltStore — Eletrônicos{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+  <h1>Eletrônicos com os melhores preços</h1>
+  <p>Smartphones, laptops, fones e muito mais com entrega rápida.</p>
+  <a href="{% url 'produtos' %}" class="btn">Ver produtos</a>
+</section>
+
+<section class="container">
+
+  {% if categorias %}
+  <div class="categories">
+    {% for cat in categorias %}
+      <a href="{% url 'produtos' %}?categoria={{ cat.id }}" class="category-tag">
+        {{ cat.icone }} {{ cat.nome }}
+      </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <h2 class="section-title">Produtos em Destaque</h2>
+
+  <div class="grid">
+    {% for produto in produtos %}
+    <div class="card">
+      {% if produto.imagem %}
+        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+      {% else %}
+        <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400" alt="{{ produto.nome }}">
+      {% endif %}
+      <div class="card-body">
+        <p class="brand">{{ produto.marca }}</p>
+        <p class="name">{{ produto.nome }}</p>
+        {% if produto.preco_antigo %}
+          <p class="old-price">R$ {{ produto.preco_antigo }}</p>
+        {% endif %}
+        <p class="price">R$ {{ produto.preco }}</p>
+        <div class="card-actions">
+          <a href="{% url 'detalhe_produto' produto.pk %}" class="btn-detail">Ver detalhes</a>
+          <a href="{% url 'adicionar_carrinho' produto.pk %}" class="btn-add">🛒</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <p style="color:#64748b">Nenhum produto em destaque no momento.</p>
+    {% endfor %}
+  </div>
+
+</section>
+
+{% endblock %}
