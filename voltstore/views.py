@@ -26,12 +26,12 @@ def lista_produtos(request):
     produtos = Produto.objects.filter(estoque__gt=0)
     categorias = Categoria.objects.all()
 
-    # Filtro por categoria
+    
     categoria_id = request.GET.get('categoria')
     if categoria_id:
         produtos = produtos.filter(categoria_id=categoria_id)
 
-    # Busca por nome
+    
     busca = request.GET.get('busca', '')
     if busca:
         produtos = produtos.filter(nome__icontains=busca)
@@ -66,11 +66,11 @@ def login_view(request):
     if request.method == 'POST' and form.is_valid():
         email    = form.cleaned_data['email']
         senha    = form.cleaned_data['senha']
-        # Busca por email
+   
         try:
             username = User.objects.get(email=email).username
         except User.DoesNotExist:
-            username = email  # tenta como username direto
+            username = email  
 
         usuario = authenticate(request, username=username, password=senha)
         if usuario:
@@ -219,7 +219,7 @@ def confirmar_pedido(request):
         messages.error(request, 'Verifique os dados de entrega.')
         return redirect('checkout')
 
-    # Cria o pedido
+    
     pedido = Pedido.objects.create(
         usuario=request.user,
         endereco=form.cleaned_data['endereco'],
@@ -239,7 +239,7 @@ def confirmar_pedido(request):
 
     pedido.calcular_total()
 
-    # Limpa o carrinho
+    
     request.session['carrinho'] = {}
     request.session.modified = True
 
